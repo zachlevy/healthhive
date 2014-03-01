@@ -9,7 +9,9 @@ from healthhive import views
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^search/$', 'healthhive.views.index', name='index'),
+    url(r'^$', 'healthhive.views.index', name='index'),
+    url(r'^search/$', 'healthhive.views.search', name='search'),
+    url(r'^submit/$', 'healthhive.views.submit', name='submit'),
     #url(r'^result/$', 'healthhive.views.result', name='result'),
     url(r'^result/(?P<druga>[a-zA-Z]+)/(?P<drugb>[a-zA-Z]+)/$', 'healthhive.views.result', name='result'),
     #url(r'^result/(?P<druga>.+)/(?P<drugb>.+)/$', 'healthhive.views.result', name='result'),

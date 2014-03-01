@@ -1,0 +1,9 @@
+<h1>search page</h1>
+
+
+<form action="/submit/" method="post">
+{% csrf_token %}
+<input type="text" name="druga" value="" />
+<input type="text" name="drugb" value="" />
+<input type="submit" value="Search" />
+</form>

@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     #url(r'^search/', include('healthhive.urls')),
 
     # when you have any url, include the app's urls.py
-    url(r'^', include('healthhive.urls')),
+    url(r'^', include('healthhive.urls', namespace="healthhive")),
     
     #url(r'^admin/', include(admin.site.urls)),
 
