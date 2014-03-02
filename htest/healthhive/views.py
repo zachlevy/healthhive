@@ -18,8 +18,8 @@ def search(request):
 
 def submit(request):
 	drug = request.POST['drugname']
-	age = request.POST['age']
-	gender = request.POST['gender']
+	age = int(request.POST['age'])
+	gender = int(request.POST['gender'])
 	#search = SearchQuery(drug=drug, age=age, gender=gender)
 	search = SearchQuery(drug=drug, age=age, gender=gender)
 	search.save()
@@ -27,7 +27,10 @@ def submit(request):
         'drug' : drug,
         'age' : age,
         'gender' : gender,
-        'result' : getAdverseReaction(),
+        'query': 'no queries',
+        'reactions' : getAdverseReactions(drug,age,gender),
+        'systems' : getSystemsAffected(drug),
+        'doses' : getDoseSeriousness(drug),
     })
 
 # dont even use this as far as i know
@@ -44,7 +47,12 @@ def result(request, druga, drugb):
 	}
 	return render(request, 'healthhive/result.html', context)
 
-def getAdverseReaction():
+def getAdverseReactions(drug, age, gender):
+	#drug = "BUDESONIDE"
+	#age = 22
+	age_lower = age - 5
+	age_upper = age + 5
+	#gender = 1 #male
 	#cursor = connection.cursor()
 	#cursor.execute("SELECT DISTINCT pt_name_eng, COUNT(*) FROM healthhive_reactions GROUP BY pt_name_eng ORDER BY COUNT(*) DESC LIMIT %s;" % 20)
 	#row = cursor.fetchall()
@@ -52,7 +60,7 @@ def getAdverseReaction():
 
 	#good #query = "SELECT DISTINCT pt_name_eng, COUNT(*) FROM healthhive_reactions GROUP BY pt_name_eng ORDER BY COUNT(*) DESC LIMIT %s;" % 20
 
-	first_query = "SELECT healthhive_reports.report_id FROM healthhive_reports INNER JOIN healthhive_reportdrug ON healthhive_reports.report_id = healthhive_reportdrug.report_id WHERE (healthhive_reportdrug.drugname = '%s') AND (healthhive_reports.age BETWEEN %s AND %s) AND (healthhive_reports.gender_code = %s);" % ("LITHIUM", 40, 50, 1)
+	first_query = "SELECT healthhive_reports.report_id FROM healthhive_reports INNER JOIN healthhive_reportdrug ON healthhive_reports.report_id = healthhive_reportdrug.report_id WHERE (healthhive_reportdrug.drugname = '%s') AND (healthhive_reports.age BETWEEN %s AND %s) AND (healthhive_reports.gender_code = %s);" % (drug, age_lower, age_upper, gender)
 	cursor = connection.cursor()
 	cursor.execute(first_query)
 	result_ids = cursor.fetchall()
@@ -81,6 +89,22 @@ def getAdverseReaction():
 	response = results
 	return response
 
+
+def getDoseSeriousness(drug):
+	#drug = "BUDESONIDE"
+	query = "SELECT unit_dose_qty, seriousness_eng, COUNT(seriousness_eng = \'Yes\') FROM healthhive_reportdrug INNER JOIN healthhive_reports ON healthhive_reportdrug.report_id = healthhive_reports.report_id WHERE drugname LIKE \'%%%s%%\' GROUP BY unit_dose_qty, seriousness_eng ORDER BY unit_dose_qty;" % drug
+	cursor = connection.cursor()
+	cursor.execute(query)
+	response = cursor.fetchall()
+	return response
+
+def getSystemsAffected(drug):
+	#drug = "BUDESONIDE"
+	query = "SELECT soc_name_eng, COUNT(soc_name_eng) FROM healthhive_reactions WHERE healthhive_reactions.report_id IN (SELECT report_id FROM healthhive_reportdrug WHERE drugname LIKE \'%%%s%%\') GROUP BY soc_name_eng ORDER BY COUNT(soc_name_eng) DESC;" % drug
+	cursor = connection.cursor()
+	cursor.execute(query)
+	response = cursor.fetchall()
+	return response
 
 def getReportId():
 	age = 55

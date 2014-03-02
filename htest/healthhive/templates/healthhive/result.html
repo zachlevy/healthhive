@@ -14,7 +14,8 @@
     <!-- include for results page only -->
     <script>
     window.onload = function () {
-	    var chart = new CanvasJS.Chart("chart-side-effects", {
+    	// CHART SIDE EFFECTS
+	    var chartSideEffects = new CanvasJS.Chart("chart-side-effects", {
 	    	axisY:{
 		        title: "Frequency",
 		        minimum: 0, // change here
@@ -32,7 +33,7 @@
 	         /*** Change type "column" to "bar", "area", "line" or "pie"***/
 	         type: "bar",
 	         dataPoints: [
-	         {% for reaction, freq in result reversed %}
+	         {% for reaction, freq in reactions reversed %}
 	         	{ label: "{{ reaction }}", y: {{ freq }} },
 	         {% endfor %}
 	         ]
@@ -40,7 +41,71 @@
 	       ]
 	     });
 
-	    chart.render();
+	    var chartSystemAffected = new CanvasJS.Chart("chart-system-affected",
+	    {
+
+	      title:{
+	        text: "Organ Systems Affected"
+	      },
+	      data: [
+	      {
+	       type: "doughnut",
+	       dataPoints: [
+			{% for system, freq in systems %}
+	         	{  y: {{ freq }}, indexLabel: "{{ system }}" },
+	        {% endfor %}
+	       ]
+	     }
+	     ]
+	   });
+
+	    var chartDoesSeriousness = new CanvasJS.Chart("chart-dose-seriousness",
+	    {
+	    	axisY:{
+		        title: "Frequency",
+		     },
+			 axisX:{
+		        title: "Dose (mg)",
+		     },
+	      title:{
+	      	text: "Dose vs Seriousness"
+	      },
+
+
+
+
+	       data: [
+	      {
+	        type: "line",
+
+	        dataPoints: [
+	        {% for dose, series, freq in doses %}
+	        	{% if series == "Yes" and dose != 0 %}
+	         		{ x: {{ dose }}, y: {{ freq }} },
+	         	{% endif %}
+	        {% endfor %}
+	        ]
+	      },
+	      {
+	        type: "line",
+
+	        dataPoints: [
+	        {% for dose, series, freq in doses %}
+	        	{% if series == "No" and dose != 0 %}
+	         		{ x: {{ dose }}, y: {{ freq }} },
+	         	{% endif %}
+	        {% endfor %}
+	        ]
+	      }
+	      ]
+	    });
+
+
+
+
+	    chartSystemAffected.render();
+	    chartSideEffects.render();
+	    chartDoesSeriousness.render();
   	}
     </script>
     <!-- include for js charts -->
@@ -61,13 +126,14 @@
             <h1 class="cover-heading">Test Result</h1>
             <div class="row">
 			  	<div class="col-xs-12">
-			  		<!--
+			  		
 					<h1>Data Output</h1>
 					<p>Drug: {{ drug }}</p>
 					<p>Age: {{ age }}</p>
 					<p>Gender: {{ gender }}</p>
 					<p>Result: {{ result }}</p>
-					-->
+					<p>{{ query }}</p>
+					<p>{{ doses }}</p>
 			  	</div>
 			</div>
 			<div class="row">
@@ -77,15 +143,21 @@
 					</div>
 				</div> 
           	</div>
-          	<!--
+          	
           	<div class="row">
 				<div class="col-xs-12">
-					<h3>Organ System Affected</h3>
 					<div id="chart-system-affected" style="height: 400px; width: 100%;">
 					</div>
 				</div> 
           	</div>
-          	-->
+
+          	<div class="row">
+				<div class="col-xs-12">
+					<div id="chart-dose-seriousness" style="height: 400px; width: 100%;">
+					</div>
+				</div> 
+          	</div>
+          	
           	<footer>
           		<p>** Do not consume data if prenant or if have history of heart disease</p>
           	</footer>
