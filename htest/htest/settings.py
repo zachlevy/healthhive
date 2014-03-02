@@ -15,7 +15,7 @@ DATABASES = {
         'NAME': 'htest',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'admin',
-        'PASSWORD': '',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '5432',                      # Set to empty string for default.
     }
@@ -109,6 +109,7 @@ WSGI_APPLICATION = 'htest.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    ""
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
@@ -122,6 +123,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'healthhive',
+    'less',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

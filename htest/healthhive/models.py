@@ -15,8 +15,9 @@ class ActiveIngredient (models.Model):
 	notes = models.CharField(max_length=2000)
 
 class SearchQuery (models.Model):
-	druga = models.CharField(max_length=100)
-	drugb = models.CharField(max_length=100)
+	drug = models.CharField(max_length=100)
+	age = models.IntegerField(default=0)
+	gender = models.IntegerField(default=0)
 
 class Reports (models.Model):
 	report_id = models.IntegerField(default=0)
@@ -28,11 +29,11 @@ class Reports (models.Model):
 	report_type_code = models.CharField(max_length=100)
 	report_type_eng = models.CharField(max_length=60)
 	report_type_fr = models.CharField(max_length=60)
-	gender_code = models.CharField(max_length=100)
+	gender_code = models.IntegerField(default=0)
 	gender_eng = models.CharField(max_length=60)
 	gender_fr = models.CharField(max_length=60)
-	#age = models.IntegerField(default=0)
-	age = models.CharField(max_length=100)
+	age = models.IntegerField(default=0)
+	#age = models.CharField(max_length=100)
 	#age_y = models.IntegerField()
 	age_unit_eng = models.CharField(max_length=60)
 	age_unit_fr = models.CharField(max_length=60)
@@ -66,7 +67,7 @@ class Reports (models.Model):
 
 class ReportDrug (models.Model):
 	report_drug_id = models.CharField(max_length=15)
-	report_id = models.CharField(max_length=15)
+	report_id = models.IntegerField(default=0)
 	drug_product_id = models.CharField(max_length=8)
 	drugname = models.CharField(max_length=255)
 	druginvolv_eng = models.CharField(max_length=60)
@@ -89,7 +90,7 @@ class ReportDrug (models.Model):
 	dosageform_fr = models.CharField(max_length=60)
 
 class Reactions (models.Model):
-	reaction_id = models.IntegerField(default=0)
+	reaction_id = models.BigIntegerField(default=0)
 	report_id = models.IntegerField(default=0)
 	duration = models.CharField(max_length=100)
 	duration_unit_eng = models.CharField(max_length=60)

@@ -1,5 +1,102 @@
-<h1>Test Template</h1>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block head_title %}{% endblock head_title %}</title>
 
-<p>Drug A: {{ druga }}</p>
+    <!-- Bootstrap -->
+    <link href="{% static 'healthhive/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'healthhive/css/style.css' %}" rel="stylesheet">
 
-<p>Drug A: {{ drugb }}</p>
+    <!-- include for results page only -->
+    <script>
+    window.onload = function () {
+	    var chart = new CanvasJS.Chart("chart-side-effects", {
+	    	axisY:{
+		        title: "Frequency",
+		        minimum: 0, // change here
+		  		// maximum: 610
+		     },
+			 axisX:{
+		        title: "Side Effect",
+		     },
+	      title:{
+	        text: "Side Effects Recorded For Males Aged 40 to 50 Years"
+	      },
+	      data: [//array of dataSeries              
+	        { //dataSeries object
+
+	         /*** Change type "column" to "bar", "area", "line" or "pie"***/
+	         type: "bar",
+	         dataPoints: [
+	         {% for reaction, freq in result reversed %}
+	         	{ label: "{{ reaction }}", y: {{ freq }} },
+	         {% endfor %}
+	         ]
+	       }
+	       ]
+	     });
+
+	    chart.render();
+  	}
+    </script>
+    <!-- include for js charts -->
+    <script src="{% static 'healthhive/js/canvasjs.min.js' %}"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <div class="inner cover">
+            <h1 class="cover-heading">Test Result</h1>
+            <div class="row">
+			  	<div class="col-xs-12">
+			  		<!--
+					<h1>Data Output</h1>
+					<p>Drug: {{ drug }}</p>
+					<p>Age: {{ age }}</p>
+					<p>Gender: {{ gender }}</p>
+					<p>Result: {{ result }}</p>
+					-->
+			  	</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h1>Lithium</h1>
+					<div id="chart-side-effects" style="height: 400px; width: 100%;">
+					</div>
+				</div> 
+          	</div>
+          	<!--
+          	<div class="row">
+				<div class="col-xs-12">
+					<h3>Organ System Affected</h3>
+					<div id="chart-system-affected" style="height: 400px; width: 100%;">
+					</div>
+				</div> 
+          	</div>
+          	-->
+          	<footer>
+          		<p>** Do not consume data if prenant or if have history of heart disease</p>
+          	</footer>
+        </div>
+      </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'healthhive/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
+
+

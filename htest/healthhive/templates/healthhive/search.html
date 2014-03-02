@@ -1,9 +1,16 @@
+
+
+{% block body %}
 <h1>search page</h1>
-
-
 <form action="/submit/" method="post">
 {% csrf_token %}
-<input type="text" name="druga" value="" />
-<input type="text" name="drugb" value="" />
+
+<input type="text" name="drugname" value="" />
+<label for="age">Age</label>
+<input type="text" name="age" value="" />
+<label for="gender">Gender</label>
+<input type="text" name="gender" value="" />
 <input type="submit" value="Search" />
 </form>
+{% endblock body %}
+
