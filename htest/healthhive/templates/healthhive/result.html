@@ -8,7 +8,7 @@
     <title>{% block head_title %}{% endblock head_title %}</title>
 
     <!-- Bootstrap -->
-    <link href="{% static 'healthhive/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'healthhive/css/bootswatch.min.css' %}" rel="stylesheet">
     <link href="{% static 'healthhive/css/style.css' %}" rel="stylesheet">
 
     <!-- include for results page only -->
@@ -25,7 +25,7 @@
 		        title: "Side Effect",
 		     },
 	      title:{
-	        text: "Side Effects Recorded For Males Aged 40 to 50 Years"
+	        text: "Side effects recorded for your demographic"
 	      },
 	      data: [//array of dataSeries              
 	        { //dataSeries object
@@ -45,7 +45,7 @@
 	    {
 
 	      title:{
-	        text: "Organ Systems Affected"
+	        text: "Organ systems affected"
 	      },
 	      data: [
 	      {
@@ -68,7 +68,7 @@
 		        title: "Dose (mg)",
 		     },
 	      title:{
-	      	text: "Dose vs Seriousness"
+	      	text: "Incidence of serious adverse events"
 	      },
 
 
@@ -108,8 +108,10 @@
 	    chartDoesSeriousness.render();
   	}
     </script>
+    
     <!-- include for js charts -->
     <script src="{% static 'healthhive/js/canvasjs.min.js' %}"></script>
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -119,26 +121,45 @@
     <![endif]-->
   </head>
   <body>
+
+
+
+
+	<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a id="brand" href="/" class="navbar-brand text-center">Health Hive</a>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
     <div class="site-wrapper">
       <div class="site-wrapper-inner">
         <div class="cover-container">
           <div class="inner cover">
-            <h1 class="cover-heading">Test Result</h1>
+            <h1 id="drug-name" class="cover-heading">{{ drug }}</h1>
+            
             <div class="row">
 			  	<div class="col-xs-12">
-			  		
+			  		<!--
 					<h1>Data Output</h1>
 					<p>Drug: {{ drug }}</p>
 					<p>Age: {{ age }}</p>
 					<p>Gender: {{ gender }}</p>
 					<p>Result: {{ result }}</p>
-					<p>{{ query }}</p>
+					<p></p>
 					<p>{{ doses }}</p>
+					-->
+					{{ query }}
 			  	</div>
 			</div>
+			
 			<div class="row">
 				<div class="col-xs-12">
-					<h1>Lithium</h1>
 					<div id="chart-side-effects" style="height: 400px; width: 100%;">
 					</div>
 				</div> 

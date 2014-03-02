@@ -1,16 +1,141 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block head_title %}{% endblock head_title %}</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'healthhive/css/bootswatch.min.css' %}" rel="stylesheet">
+    <link href="{% static 'healthhive/css/style.css' %}" rel="stylesheet">
+
+	<!-- include for spinner -->
+    <script src="{% static 'healthhive/js/spin.min.js' %}"></script>
+    <script>
+	function startSpin () {
+		var opts = {
+		  lines: 13, // The number of lines to draw
+		  length: 20, // The length of each line
+		  width: 10, // The line thickness
+		  radius: 30, // The radius of the inner circle
+		  corners: 1, // Corner roundness (0..1)
+		  rotate: 0, // The rotation offset
+		  direction: 1, // 1: clockwise, -1: counterclockwise
+		  color: '#000', // #rgb or #rrggbb or array of colors
+		  speed: 1, // Rounds per second
+		  trail: 60, // Afterglow percentage
+		  shadow: false, // Whether to render a shadow
+		  hwaccel: false, // Whether to use hardware acceleration
+		  className: 'spinner', // The CSS class to assign to the spinner
+		  zIndex: 2e9, // The z-index (defaults to 2000000000)
+		  top: 'auto', // Top position relative to parent in px
+		  left: 'auto' // Left position relative to parent in px
+		};
+		var target = document.getElementById('spinner');
+		var spinner = new Spinner(opts).spin(target);
+	}
+	
+
+	//var spinner = new Spinner().spin();
+	//target.appendChild(spinner.el);
+    </script>
+
+
+
+    <!-- include for results page only -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+
+	<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a id="brand" href="/" class="navbar-brand text-center">Health Hive</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+
+            <li><a href="https://webprod4.hc-sc.gc.ca/medeffect-medeffet/index-eng.jsp" target="_blank">Report an adverse reaction</a></li>
+      	</ul>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <div class="inner cover">
+
+
 
 
 {% block body %}
-<h1>search page</h1>
-<form action="/submit/" method="post">
+<div id="spinner"></div>
+<h1 class="text-center">search for a drug name</h1>
+<p id="blurb" class="text-center">Let Health Hive show you the experiences of other patients just like you.<br/>We have over 1.25 million stories of Canadian patients from the last 40 years.</p>
+<form id="search-form" action="/submit/" method="post">
 {% csrf_token %}
-
-<input type="text" name="drugname" value="" />
-<label for="age">Age</label>
-<input type="text" name="age" value="" />
-<label for="gender">Gender</label>
-<input type="text" name="gender" value="" />
-<input type="submit" value="Search" />
+<div class="row">
+	<div id="search-drug" class="form-group col-xs-10 col-xs-offset-1">
+	  <input class="typeahead form-control input-lg" name="drugname" type="text" id="drugname" value="">
+	</div>
+</div>
+<div class="row">
+	<div id="search-age" class="form-group col-sm-2 col-sm-offset-4 col-xs-6">
+	  <label class="control-label" for="age">Age</label>
+	  <input type="text" name="age" class="form-control" id="age">
+	</div>
+	<!--
+	<div id="search-gender" class="form-group col-xs-6">
+	  <label class="control-label" for="gender">Gender</label>
+	  <input type="text" name="gender" class="form-control" id="gender">
+	</div>-->
+	<div id="search-gender" class="form-group col-sm-2 col-xs-6">
+		<label class="control-label" for="gender">Gender</label>
+		<select id="gender" class="form-control" name="gender">
+	      <option value="1">Male</option>
+	      <option value="2">Female</option>
+	    </select>
+	</div>
+</div>
+<div class="row">
+	<div id="submit-button">
+		<input type="submit" class="btn btn-success btn-lg" value="Search" onclick="startSpin()"/>
+	</div>
+	<!--
+	<div id="report-button">
+		<a href="https://webprod4.hc-sc.gc.ca/medeffect-medeffet/index-eng.jsp" target="_blank" class="btn btn-default btn-lg">Report an adverse reaction</a>
+	</div>
+	-->
+</div>
 </form>
 {% endblock body %}
+			</div>
+		</div>
+      </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'healthhive/js/bootstrap.min.js' %}"></script>
 
+    <script src="{% static 'healthhive/js/typeahead.bundle.js' %}"></script>
+
+	<script src="{% static 'healthhive/js/typeahead.js' %}"></script> 
+	<script>
+	
+	</script>
+
+  </body>
+</html>

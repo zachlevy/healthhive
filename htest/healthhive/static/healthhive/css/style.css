@@ -1,27 +1,37 @@
-.test-class {
-	background-color: #000;
+#form-submit {
+	text-align: center;
+}
+
+#submit-button input, #report-button a {
+	margin: 0 auto;
+	display: block;
+	width: 40%;
+}
+#report-button a {
+	margin-top: 1em;
+}
+#search-drug {
+
+}
+#search-gender {
+
+}
+#search-age {
+
+}
+#blurb {
+	text-align: center;
+	color: #999;
+	padding-bottom: 20px;
+	font-size: 1.2em;
+
+}
+#search-drug > span {
+	display: block !important;
 }
 /*
  * Globals
  */
-
-/* Links */
-a,
-a:focus,
-a:hover {
-  color: #fff;
-}
-
-/* Custom default button */
-.btn-default,
-.btn-default:hover,
-.btn-default:focus {
-  color: #333;
-  text-shadow: none; /* Prevent inheritence from `body` */
-  background-color: #fff;
-  border: 1px solid #fff;
-}
-
 
 /*
  * Base structure
@@ -30,13 +40,11 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
+
 }
 body {
-  color: #fff;
-  //text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
-  box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+ 	padding-top: 60px;
+ 	background: url(/static/healthhive/images/leaf_gray3.png) no-repeat center center;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -61,50 +69,6 @@ body {
 }
 
 
-/*
- * Header
- */
-.masthead-brand {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.masthead-nav > li {
-  display: inline-block;
-}
-.masthead-nav > li + li {
-  margin-left: 20px;
-}
-.masthead-nav > li > a {
-  padding-right: 0;
-  padding-left: 0;
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff; /* IE8 proofing */
-  color: rgba(255,255,255,.75);
-  border-bottom: 2px solid transparent;
-}
-.masthead-nav > li > a:hover,
-.masthead-nav > li > a:focus {
-  background-color: transparent;
-  border-bottom-color: rgba(255,255,255,.25);
-}
-.masthead-nav > .active > a,
-.masthead-nav > .active > a:hover,
-.masthead-nav > .active > a:focus {
-  color: #fff;
-  border-bottom-color: #fff;
-}
-
-@media (min-width: 768px) {
-  .masthead-brand {
-    float: left;
-  }
-  .masthead-nav {
-    float: right;
-  }
-}
-
 
 /*
  * Cover
@@ -116,16 +80,6 @@ body {
 .cover .btn-lg {
   padding: 10px 20px;
   font-weight: bold;
-}
-
-
-/*
- * Footer
- */
-
-.mastfoot {
-  color: #999; /* IE8 proofing */
-  color: rgba(255,255,255,.5);
 }
 
 
@@ -162,3 +116,67 @@ body {
     width: 700px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+/* typeahead */
+
+
+
+
+
+
+
+.tt-query,
+.tt-hint {
+}
+
+
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  width: 422px;
+  margin-top: 12px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+

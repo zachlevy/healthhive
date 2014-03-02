@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 from healthhive.models import SearchQuery
 from django.db import connection
 
+import json
+import HTMLParser
 import logging
 
 #from healthhive.models import ActiveIngredient
@@ -27,10 +29,10 @@ def submit(request):
         'drug' : drug,
         'age' : age,
         'gender' : gender,
-        'query': 'no queries',
-        'reactions' : getAdverseReactions(drug,age,gender),
-        'systems' : getSystemsAffected(drug),
-        'doses' : getDoseSeriousness(drug),
+        'query': getDrugNames(),
+        'reactions' : '', #getAdverseReactions(drug,age,gender),
+        'systems' : '', #getSystemsAffected(drug),
+        'doses' : '', #getDoseSeriousness(drug),
     })
 
 # dont even use this as far as i know
@@ -105,6 +107,23 @@ def getSystemsAffected(drug):
 	cursor.execute(query)
 	response = cursor.fetchall()
 	return response
+
+def getDrugNames():
+	query = "SELECT drugname FROM healthhive_reportdrug GROUP BY drugname ORDER BY drugname;"
+	cursor = connection.cursor()
+	cursor.execute(query)
+	#response = cursor.fetchall()
+	#p = HTMLParser.HTMLParser()
+
+
+
+	response = ''
+	response = cursor.fetchall()
+	response = str(response)
+	response = response.replace("(u'", "{drugname: \"")
+	response = response.replace("',)", "\"}")
+	
+	return response	
 
 def getReportId():
 	age = 55
