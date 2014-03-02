@@ -29,10 +29,10 @@ def submit(request):
         'drug' : drug,
         'age' : age,
         'gender' : gender,
-        'query': getDrugNames(),
-        'reactions' : '', #getAdverseReactions(drug,age,gender),
-        'systems' : '', #getSystemsAffected(drug),
-        'doses' : '', #getDoseSeriousness(drug),
+        'query': '', #getDrugNames(),
+        'reactions' : getAdverseReactions(drug,age,gender),
+        'systems' : getSystemsAffected(drug),
+        'doses' : getDoseSeriousness(drug),
     })
 
 # dont even use this as far as i know
@@ -122,6 +122,9 @@ def getDrugNames():
 	response = str(response)
 	response = response.replace("(u'", "{drugname: \"")
 	response = response.replace("',)", "\"}")
+	response = response.replace("(u", "{drugname: \"")
+	response = response.replace(",)", "\"}")
+	response = response.replace("\"\"", "\"")
 	
 	return response	
 
